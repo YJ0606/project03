@@ -7,4 +7,7 @@ node{
     stage('build'){
         sh "mvn clean package"
     }
+    stage('docker'){
+        sh "docker build -t project02 ."
+    }
 }
