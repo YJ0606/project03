@@ -4,6 +4,4 @@ node{
         git 'https://github.com/sujitharamesh1998/project02'
         echo 'completed'
         }
-    
-
-
+}
