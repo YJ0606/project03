@@ -15,4 +15,8 @@ node{
         sh "docker login -u sujitha202301 -p ${docker}"
         }
     }
+    stage('tag and push'){
+        sh "docker tag project02 sujitha202301/spring123:1"
+        sh "docker push sujitha202301/spring123:1"
+    }
 }
