@@ -10,4 +10,9 @@ node{
     stage('docker'){
         sh "docker build -t project02 ."
     }
+    stage('login'){
+        withCredentials([string(credentialsId: 'dockerhubpass', variable: 'docker')]) {
+        sh "docker login -u sujitha202301 -p ${docker}"
+        }
+    }
 }
