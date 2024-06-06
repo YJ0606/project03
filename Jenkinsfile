@@ -30,9 +30,6 @@ node{
     stage('Configure and Deploy to the test-server'){
     ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/var/lib/jenkins/workspace/pipeline-project/ansible-playbook.yml', vaultTmpPath: ''
     }
-        
-        
-    }
 }
 
 
