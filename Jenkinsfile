@@ -1,24 +1,7 @@
 node{
-    
-    def mavenHome
-    def mavenCMD
-    def docker
-    def dockerCMD
-    def tagName
-    
-    stage('prepare enviroment'){
-        echo 'initialize all the variables'
-        mavenHome = tool name: 'maven' , type: 'maven'
-        mavenCMD = "${mavenHome}/bin/mvn"
-        docker = tool name: 'docker' , type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-        dockerCMD = "${docker}/bin/docker"
-        tagName="3.0"
-    }
-    
     stage('git code checkout'){
-        try{
-            echo 'checkout the code from git repository'
-            git 'https://github.com/sujitharamesh1998/project02'
+        echo 'checkout the code from git repository'
+        git 'https://github.com/sujitharamesh1998/project02'
         }
     stage('Build the Application'){
         echo "Cleaning... Compiling...Testing... Packaging..."
