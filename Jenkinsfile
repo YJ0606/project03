@@ -20,6 +20,6 @@ node{
         sh "docker push sujitha202301/spring123:1"
     }
     stage('deploy'){
-    ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/var/lib/jenkins/workspace/pipeline/ansible-playbook.yml', vaultTmpPath: ''
+     ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/var/lib/jenkins/workspace/pipeline/ansible-playbook.yml', vaultTmpPath: ''
 }
 }
