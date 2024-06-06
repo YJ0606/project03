@@ -18,21 +18,12 @@ node{
     stage('git code checkout'){
         try{
             echo 'checkout the code from git repository'
-            git 'https://github.com/shubhamkushwah123/star-agile-insurance-project.git'
+            git 'https://github.com/sujitharamesh1998/project02'
         }
-        catch(Exception e){
-            echo 'Exception occured in Git Code Checkout Stage'
-            currentBuild.result = "FAILURE"
-            emailext body: '''Dear All,
-            The Jenkins job ${JOB_NAME} has been failed. Request you to please have a look at it immediately by clicking on the below link. 
-            ${BUILD_URL}''', subject: 'Job ${JOB_NAME} ${BUILD_NUMBER} is failed', to: 'shubham@gmail.com'
-        }
-    }
-    
     stage('Build the Application'){
         echo "Cleaning... Compiling...Testing... Packaging..."
         //sh 'mvn clean package'
-        sh "${mavenCMD} clean package"        
+        sh " mvn clean package "        
     }
     
     stage('publish test reports'){
@@ -41,19 +32,20 @@ node{
     
     stage('Containerize the application'){
         echo 'Creating Docker image'
-        sh "${dockerCMD} build -t shubhamkushwah123/insure-me:${tagName} ."
+        sh " docker build -t project02 ."
     }
     
     stage('Pushing it ot the DockerHub'){
         echo 'Pushing the docker image to DockerHub'
-        withCredentials([string(credentialsId: 'dock-password', variable: 'dockerHubPassword')]) {
-        sh "${dockerCMD} login -u shubhamkushwah123 -p ${dockerHubPassword}"
-        sh "${dockerCMD} push shubhamkushwah123/insure-me:${tagName}"
-            
+        withCredentials([string(credentialsId: 'dockerhubpass', variable: 'docker')]) {
+        sh "${dockerCMD} login -u sujitha202301 -p ${docker}"
+        sh " docker tag project02 sujitha202301/spring123:1.0 "    
+        sh " docker push sujitha202301/spring123:1.0 "
+        }   
         }
         
     stage('Configure and Deploy to the test-server'){
-        ansiblePlaybook become: true, credentialsId: 'ansible-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'
+    ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/var/lib/jenkins/workspace/pipeline-project/ansible-playbook.yml', vaultTmpPath: ''
     }
         
         
