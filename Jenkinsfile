@@ -12,7 +12,7 @@ node{
     }
     stage('login'){
     withCredentials([string(credentialsId: 'dockerhubpass', variable: 'docker')]) {
-    sh " docker login -u sujitha202301 -p ${dockerl}"
+    sh " docker login -u sujitha202301 -p ${docker}"
        }
     }
     stage('tag'){
