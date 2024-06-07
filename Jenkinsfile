@@ -19,4 +19,7 @@ node{
         sh "docker tag project02 sujitha202301/staragileproject:3"
         sh "docker push sujitha202301/staragileproject:3"
     }
+    stage('deploy in test server'){
+    ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/var/lib/jenkins/workspace/pipeline/ansible-playbook.yml', vaultTmpPath: ''
 }    
+}
