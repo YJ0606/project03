@@ -7,19 +7,20 @@ node{
     stage('build'){
         sh "mvn clean package"
     }
-    stage('docker'){
+      stage('docker'){
         sh "docker build -t project02 ."
     }
     stage('login'){
-        withCredentials([string(credentialsId: 'dockerhubpass', variable: 'docker')]) {
-        sh "docker login -u sujitha202301 -p ${docker}"
-        }
+    withCredentials([string(credentialsId: 'docker', variable: 'dockerlogin')]) {
+    sh " docker login -u sujitha202301 -p ${dockerlogin}"
+       }
     }
-    stage('tag and push'){
-        sh "docker tag project02 sujitha202301/spring123:1"
-        sh "docker push sujitha202301/spring123:1"
+    stage('tag'){
+        sh " docker tag project02 sujitha202301/staragileproject:1 "
+        sh " docker push sujitha202301/staragileproject:1 "
     }
     stage('deploy'){
-    ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/var/lib/jenkins/workspace/pipeline/ansible-playbook.yml', vaultTmpPath: ''
-}
-}    
+     ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/var/lib/jenkins/workspace/pipeline/ansible-playbook.yml', vaultTmpPath: '' 
+    }
+    
+}        
