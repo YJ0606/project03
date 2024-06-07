@@ -7,4 +7,16 @@ node{
     stage('build'){
         sh "mvn clean package"
     }
+     stage('docker'){
+        sh "docker build -t project02 ."
+    }
+    stage('login'){
+    withCredentials([string(credentialsId: 'dockerhubpass', variable: 'docker')]) {
+    sh " docker login -u sujitha202301 -p ${dockerl}"
+       }
+    }
+    stage('tag'){
+        sh " docker tag project02 sujitha202301/staragileproject:1 "
+        sh " docker push sujitha202301/staragileproject:2 "
+    }
 }   
